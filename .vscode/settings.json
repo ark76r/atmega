@@ -1,0 +1,10 @@
+{
+    "C_Cpp.intelliSenseEngineFallback": "Disabled",
+    "C_Cpp.intelliSenseEngine": "Default",
+    "files.associations": {
+        "io.h": "c",
+        "features.h": "c",
+        "delay.h": "c",
+        "dallas1w.h": "c"
+    }
+}
