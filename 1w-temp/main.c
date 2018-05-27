@@ -10,19 +10,7 @@
 #include "../lib/lcd/lcd.h"
 #include "../lib/uart/uart.h"
 #include "../lib/dallas1w/dallas1w.h"
-
-// int uart_putchar(char c, FILE *stream)
-// {
-//     putByte(c);
-//     return 0;
-// }
-
-// int uart_getchar(FILE *stream)
-// {
-//     return getByte();
-// }
-
-// FILE uart_str = FDEV_SETUP_STREAM(uart_putchar, uart_getchar, _FDEV_SETUP_RW);
+//#include "../lib/console/console.h"
 
 int main(void)
 {
@@ -32,7 +20,7 @@ int main(void)
     //########### I/O ###########
 
     initUART();
-    // stdout = &uart_str;
+    //init_console();
 
     writeString("\e[0m\e[2J\e[HStart\r\n\e[?25l");
     _delay_ms(1000);

@@ -15,7 +15,7 @@
 DEVICE     = atmega328p
 CLOCK      = 1000000
 PROGRAMMER = -c usbasp
-OBJECTS    = main.o ../lib/uart/uart.o ../lib/dallas1w/dallas1w.o ../lib/lcd/lcd.o
+OBJECTS    = main.o ../lib/uart/uart.o ../lib/dallas1w/dallas1w.o ../lib/lcd/lcd.o # ../lib/console/console.o
 FUSES      = #-U lfuse:w:0x64:m -U hfuse:w:0xdd:m -U efuse:w:0xff:m
 
 
@@ -24,7 +24,7 @@ FUSES      = #-U lfuse:w:0x64:m -U hfuse:w:0xdd:m -U efuse:w:0xff:m
 
 # Tune the lines below only if you know what you are doing:
 
-AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE) -V -B 8
+AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE) -V -B 4
 COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
 
 # symbolic targets:
