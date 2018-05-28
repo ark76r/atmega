@@ -26,7 +26,9 @@ int main(void)
     _delay_ms(1000);
 
     lcd_init();
-    lcd_control(1, 1, 0);
+    lcd_control(1, 0, 0);
+    lcd_clear();
+    lcd_home();
 
     uint8_t *rom = p1w_search_rom();
 
@@ -46,10 +48,6 @@ int main(void)
         writeString("\r\n");
     }
 
-    lcd_clear();
-    lcd_home();
-    lcd_text("Temperature:");
-
     while (1) //Pętla główna
     {
         _delay_ms(1000);
@@ -57,10 +55,13 @@ int main(void)
         if (!present)
         {
             writeString("\rno sensor on 1-wire                ");
-            lcd_goto(1, 0);
+            lcd_clear();
+            lcd_home();
             lcd_text("no sensor");
             continue;
         }
+        lcd_goto(0, 0);
+        lcd_text("Temp:     ");
 
         p1w_write_byte(0xCC); // SKIP ROM
         p1w_write_byte(0x44); // CONVERT T

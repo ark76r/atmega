@@ -19,14 +19,14 @@ void initUART(void)
 
 uint8_t getByte(void)
 {
-	while (!(UCSR0A & _BV(RXC0)))
+	while (!(UCSR0A & (1 << RXC0)))
 		;
 	return (uint8_t)UDR0;
 }
 
 void putByte(unsigned char data)
 {
-	while (!(UCSR0A & _BV(UDRE0)))
+	while (!(UCSR0A & (1 << UDRE0)))
 		;
 	UDR0 = (unsigned char)data;
 }
