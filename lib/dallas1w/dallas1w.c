@@ -1,4 +1,5 @@
 #include <util/delay.h>
+#include <avr/interrupt.h>
 #include "dallas1w.h"
 
 
@@ -9,19 +10,23 @@ uint8_t p1w_reset(void)
     ONEW_INPUT();
     while (--counter > 0 && !ONEW_VALUE)
         _delay_us(2);
-
+    cli();
     ONEW_OUTPUT();
     ONEW_LOW();
+    sei();
     _delay_us(480);
+    cli();
     ONEW_INPUT();
     _delay_us(70);
     present = ONEW_VALUE;
+    sei();
     _delay_us(410);
     return !present;
 }
 
 void p1w_write_slot(uint8_t bit)
 {
+    cli();
     ONEW_OUTPUT();
     ONEW_LOW();
     if (bit)
@@ -36,16 +41,19 @@ void p1w_write_slot(uint8_t bit)
         ONEW_HIGH();
         _delay_us(5);
     }
+    sei();
 }
 uint8_t p1w_read_slot(void)
 {
     uint8_t r;
+    cli();
     ONEW_OUTPUT();
     ONEW_LOW();
     _delay_us(3);
     ONEW_INPUT();
     _delay_us(10);
     r = ONEW_VALUE;
+    sei();
     _delay_us(53);
     return r;
 }
