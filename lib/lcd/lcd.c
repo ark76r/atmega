@@ -1,10 +1,10 @@
 #include "lcd.h"
 
-#define PULSE()         \
-    do                  \
-    {                   \
+#define PULSE()           \
+    do                    \
+    {                     \
         LCDPORT |= LCDE;  \
-        _delay_us(5); \
+        _delay_us(5);     \
         LCDPORT &= ~LCDE; \
     } while (0)
 
@@ -60,26 +60,29 @@ void lcd_char(char ch)
     lcd_send(1, ch);
 }
 
-void lcd_text(char* str)
+void lcd_text(char *str)
 {
     while (*str != '\0')
-	{
-		lcd_send(1, *str);
-		++str;
-	}
+    {
+        lcd_send(1, *str);
+        ++str;
+    }
 }
 
 void lcd_goto(uint8_t row, uint8_t col)
 {
-    if (row > 1) row = 1;
-    lcd_send(0, 0x80 | (0x7f & ( row * 0x40 + col)));
+    if (row > 1)
+        row = 1;
+    lcd_send(0, 0x80 | (0x7f & (row * 0x40 + col)));
 }
 
 void lcd_shift(uint8_t cur_or_disp, uint8_t left_or_right)
 {
     uint8_t cmd = 0x10;
-    if (cur_or_disp) cmd |= 1 << 3;
-    if (left_or_right) cmd |= 1 << 2;
+    if (cur_or_disp)
+        cmd |= 1 << 3;
+    if (left_or_right)
+        cmd |= 1 << 2;
     lcd_send(0, cmd);
 }
 
@@ -94,9 +97,12 @@ void lcd_init(void)
 void lcd_control(uint8_t display, uint8_t cursor, uint8_t blinking)
 {
     uint8_t cmd = 0b00001000;
-    if (display) cmd |= (1<<2);
-    if (cursor) cmd |= (1<<1);
-    if (blinking) cmd |= 1;
+    if (display)
+        cmd |= (1 << 2);
+    if (cursor)
+        cmd |= (1 << 1);
+    if (blinking)
+        cmd |= 1;
     lcd_send(0, cmd);
 }
 void lcd_clear(void)
@@ -107,4 +113,3 @@ void lcd_home(void)
 {
     lcd_send(0, 2);
 }
-

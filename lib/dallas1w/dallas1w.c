@@ -2,7 +2,6 @@
 #include <avr/interrupt.h>
 #include "dallas1w.h"
 
-
 uint8_t p1w_reset(void)
 {
     uint8_t counter = 125;
@@ -90,14 +89,14 @@ uint8_t p1w_read_byte()
     return r;
 }
 
-uint8_t* p1w_search_rom(void)
+uint8_t *p1w_search_rom(void)
 {
     static uint8_t rom[8] = {0, 0, 0, 0, 0, 0, 0, 0};
     uint8_t i, j;
     uint8_t present = p1w_reset();
     if (!present)
     {
-        return (uint8_t*) 0;
+        return (uint8_t *)0;
     }
     p1w_write_byte(0xF0); // search_rom
 

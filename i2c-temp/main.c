@@ -10,20 +10,21 @@
 #include "../lib/uart/uart.h"
 #include "../lib/mpl3115a2/mpl3115a2.h"
 
-
 #define RED "\e[31m"
 #define BLUE "\e[34m"
 #define RESET "\e[0m"
 
-void print_temp(const char* label, float temp, float diff)
+void print_temp(const char *label, float temp, float diff)
 {
     char str[10];
 
     dtostrf(temp, 3, 2, str);
     writeString(RESET);
     writeString(label);
-    if (diff > 0.0) writeString(RED);
-    else if (diff < 0.0) writeString(BLUE);
+    if (diff > 0.0)
+        writeString(RED);
+    else if (diff < 0.0)
+        writeString(BLUE);
     writeString(str);
     putByte('\t');
 }
@@ -59,17 +60,17 @@ int main(void)
 
     uint8_t mpl_state = mpl_check(1); // init also i2c
 
-    switch(mpl_state)
+    switch (mpl_state)
     {
-        case 0:
-            writeString("Found MPL3115A2\r\n");
-            break;
-        case 1:
-            writeString("No i2c devices\r\n");
-            break;
-        case 2:
-            writeString("Not a MPL3115A2 on 0x60");
-            break;
+    case 0:
+        writeString("Found MPL3115A2\r\n");
+        break;
+    case 1:
+        writeString("No i2c devices\r\n");
+        break;
+    case 2:
+        writeString("Not a MPL3115A2 on 0x60");
+        break;
     }
 
     float old_mpl = 0.0;
@@ -104,5 +105,3 @@ int main(void)
     }
     return 0;
 }
-
-

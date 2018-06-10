@@ -22,8 +22,7 @@
 
 // FILE uart_str = FDEV_SETUP_STREAM(uart_putchar, uart_getchar, _FDEV_SETUP_RW);
 
-    // stdout = &uart_str;
-
+// stdout = &uart_str;
 
 int main(void)
 {
@@ -33,11 +32,10 @@ int main(void)
 
     writeString("\e[0m\e[2J\e[HStart\r\n\e[?25l");
 
-
     while (1) //Pętla główna
     {
         _delay_ms(1000);
-	putByte('X');
+        putByte('X');
     }
     return 0;
 }

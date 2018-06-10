@@ -8,7 +8,8 @@ static char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', '
 
 volatile uint8_t cbuff[16]; // cyclic buffer
 
-struct cb_inticies {
+struct cb_inticies
+{
 	uint8_t front;
 	uint8_t end;
 };
@@ -106,13 +107,13 @@ static uint8_t cb_get_byte(void)
 		sleep_cpu();
 	}
 	cli();
-	tmp = cbuff[(++idxs.front) & (sizeof(cbuff)-1)];
+	tmp = cbuff[(++idxs.front) & (sizeof(cbuff) - 1)];
 	sei();
 	return tmp;
 }
 
 ISR(USART_RX_vect)
 {
-	cbuff[ (++idxs.end) & (sizeof(cbuff)-1)] = (uint8_t)UDR0;
+	cbuff[(++idxs.end) & (sizeof(cbuff) - 1)] = (uint8_t)UDR0;
 }
 #endif

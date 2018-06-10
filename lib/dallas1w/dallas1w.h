@@ -17,7 +17,6 @@
 
 #define ONEW_VALUE (ONEW_PIN & ONEW)
 
-
 uint8_t p1w_reset(void);
 void p1w_write_slot(uint8_t bit);
 uint8_t p1w_read_slot(void);

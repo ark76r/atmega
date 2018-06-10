@@ -13,15 +13,17 @@
 #define BLUE "\e[34m"
 #define RESET "\e[0m"
 
-void print_temp(const char* label, float temp, float diff)
+void print_temp(const char *label, float temp, float diff)
 {
     char str[10];
 
     dtostrf(temp, 3, 2, str);
     writeString(RESET);
     writeString(label);
-    if (diff > 0.0) writeString(RED);
-    else if (diff < 0.0) writeString(BLUE);
+    if (diff > 0.0)
+        writeString(RED);
+    else if (diff < 0.0)
+        writeString(BLUE);
     writeString(str);
     putByte('\t');
 }
