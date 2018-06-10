@@ -16,8 +16,8 @@ DEVICE     = atmega328p
 CLOCK      = 1000000
 OSC        = 16000000
 PROGRAMMER = -c usbasp
-OBJECTS    = main.o ../lib/timer0/timer0.o ../lib/uart/uart.o ../lib/dallas1w/dallas1w.o  \
-../lib/ds18b20/ds18b20.o
+OBJECTS    = main.o ../lib/timer0/timer0.o ../lib/uart/uart.o ../lib/dallas1w/dallas1w.o ../lib/i2c/i2c.o \
+../lib/ds18b20/ds18b20.o ../lib/mpl3115a2/mpl3115a2.o # ../lib/console/console.o
 FUSES      = #-U lfuse:w:0x64:m -U hfuse:w:0xdd:m -U efuse:w:0xff:m
 
 

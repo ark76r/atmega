@@ -14,6 +14,7 @@
 
 DEVICE     = atmega328p
 CLOCK      = 1000000
+OSC        = 16000000
 PROGRAMMER = -c usbasp
 OBJECTS    = main.o ../lib/uart/uart.o
 FUSES      = #-U lfuse:w:0x64:m -U hfuse:w:0xdd:m -U efuse:w:0xff:m
@@ -25,7 +26,7 @@ FUSES      = #-U lfuse:w:0x64:m -U hfuse:w:0xdd:m -U efuse:w:0xff:m
 # Tune the lines below only if you know what you are doing:
 
 AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE) -V -B 8
-COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
+COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -DF_OSC=$(OSC) -mmcu=$(DEVICE)
 
 # symbolic targets:
 all:	main.hex

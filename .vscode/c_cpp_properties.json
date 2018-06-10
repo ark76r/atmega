@@ -13,7 +13,7 @@
                 "${workspaceFolder}",
                 "/usr/lib/avr/include"
             ],
-            "defines": ["__AVR_ATmega328P__", "F_CPU"],
+            "defines": ["__AVR_ATmega328P__", "F_CPU=1000000"],
             "compilerPath": "/usr/bin/avr-gcc",
             "cStandard": "c11",
             "cppStandard": "c++17",

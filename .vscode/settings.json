@@ -5,6 +5,8 @@
         "io.h": "c",
         "features.h": "c",
         "delay.h": "c",
-        "dallas1w.h": "c"
+        "dallas1w.h": "c",
+        "math.h": "c",
+        "ds18b20.h": "c"
     }
 }

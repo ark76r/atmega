@@ -9,8 +9,8 @@ static char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', '
 volatile uint8_t cbuff[16]; // cyclic buffer
 
 struct cb_inticies {
-	uint8_t front : 4;
-	uint8_t end: 4;
+	uint8_t front;
+	uint8_t end;
 };
 
 volatile struct cb_inticies idxs;
@@ -42,16 +42,18 @@ uint8_t getByte(void)
 #ifdef UART_ISR
 	return cb_get_byte();
 #else
-	while (!(UCSR0A & (1 << RXC0)))
-		;
+	loop_until_bit_is_set(UCSR0A, RXC0);
+	// while (!(UCSR0A & (1 << RXC0)))
+	// 	;
 	return (uint8_t)UDR0;
 #endif
 }
 
 void putByte(unsigned char data)
 {
-	while (!(UCSR0A & (1 << UDRE0)))
-		;
+	loop_until_bit_is_set(UCSR0A, UDRE0);
+	// while (!(UCSR0A & (1 << UDRE0)))
+	// 	;
 	UDR0 = (unsigned char)data;
 }
 
@@ -61,7 +63,7 @@ void writeHex(uint8_t byte)
 	putByte(digits[byte & 0x0f]);
 }
 
-void writeString(char *str)
+void writeString(const char *str)
 {
 	while (*str)
 	{
@@ -81,7 +83,6 @@ const char *readString(void)
 	return buffer;
 }
 
-
 // cyclic buffer implementation
 
 uint8_t uart_data_ready(void)
@@ -90,27 +91,28 @@ uint8_t uart_data_ready(void)
 	return !(idxs.front == idxs.end);
 
 #else
-	return (UCSR0A & (1 << UDRE0));
+	return bit_is_set(UCSR0A, UDRE0);
+	//return (UCSR0A & (1 << UDRE0));
 #endif
 }
-#ifdef UART_ISR
 
-static void cb_put_byte(uint8_t b)
-{
-	cbuff[ (++idxs.end) & (sizeof(cbuff)-1)] = b;
-}
+#ifdef UART_ISR
 
 static uint8_t cb_get_byte(void)
 {
+	uint8_t tmp;
 	while (idxs.front == idxs.end)
 	{
 		sleep_cpu();
 	}
-	return cbuff[(++idxs.front) & (sizeof(cbuff)-1)];
+	cli();
+	tmp = cbuff[(++idxs.front) & (sizeof(cbuff)-1)];
+	sei();
+	return tmp;
 }
 
 ISR(USART_RX_vect)
 {
-	cb_put_byte((uint8_t)UDR0);
+	cbuff[ (++idxs.end) & (sizeof(cbuff)-1)] = (uint8_t)UDR0;
 }
 #endif

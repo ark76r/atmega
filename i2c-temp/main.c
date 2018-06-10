@@ -8,6 +8,8 @@
 #include "../lib/dallas1w/dallas1w.h"
 #include "../lib/ds18b20/ds18b20.h"
 #include "../lib/uart/uart.h"
+#include "../lib/mpl3115a2/mpl3115a2.h"
+
 
 #define RED "\e[31m"
 #define BLUE "\e[34m"
@@ -50,11 +52,27 @@ int main(void)
         for (uint8_t j = 8; j > 0; j--)
         {
             writeHex(ds_rom[j - 1]);
-            putByte(' ');
+            putByte(':');
         }
         writeString("\r\n");
     }
 
+    uint8_t mpl_state = mpl_check(1); // init also i2c
+
+    switch(mpl_state)
+    {
+        case 0:
+            writeString("Found MPL3115A2\r\n");
+            break;
+        case 1:
+            writeString("No i2c devices\r\n");
+            break;
+        case 2:
+            writeString("Not a MPL3115A2 on 0x60");
+            break;
+    }
+
+    float old_mpl = 0.0;
     float old_ds = 0.0;
 
     while (1) //Pętla główna
@@ -63,6 +81,9 @@ int main(void)
 
         if (ds_rom)
             ds_convert_t(0); // 0 means first device on the bus
+
+        if (mpl_state == 0)
+            mpl_calc_temp();
 
         timer0_sleep_ms(1000);
 
@@ -73,7 +94,15 @@ int main(void)
             old_ds = temperature;
         }
 
+        if (mpl_state == 0)
+        {
+            temperature = mpl_read_temp();
+            print_temp("DS: ", temperature, temperature - old_mpl);
+            old_mpl = temperature;
+        }
         writeString("\e[K");
     }
     return 0;
 }
+
+

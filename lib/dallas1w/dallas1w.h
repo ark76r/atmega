@@ -7,6 +7,9 @@
 #define ONEW_PIN PINB
 #define ONEW (1 << PB1)
 
+#define ONEW_SKIP_ROM 0xCC
+#define ONEW_MATCH_ROM 0x55
+
 #define ONEW_OUTPUT() do { ONEW_DDR |= ONEW; } while(0)
 #define ONEW_INPUT() do { ONEW_DDR &= ~ONEW; } while(0)
 #define ONEW_LOW() do { ONEW_PORT &= ~ONEW; } while(0)

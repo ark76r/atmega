@@ -15,7 +15,7 @@
 void initUART(void);
 uint8_t getByte(void);
 void putByte(unsigned char data);
-void writeString(char *str);
+void writeString(const char *str);
 void writeHex(uint8_t byte);
 
 const char* readString(void);

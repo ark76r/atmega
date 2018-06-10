@@ -7,11 +7,6 @@
 // Pętla główna
 int main(void)
 {
-    // #if (F_CPU == 1000000)
-    // clock_prescale_set(clock_div_8);
-    // #endif
-
-    //########### I/O ###########
 
     initUART();
     writeString("Start\r\n");
