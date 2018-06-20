@@ -69,7 +69,7 @@ int main(void)
         writeString("No i2c devices\r\n");
         break;
     case 2:
-        writeString("Not a MPL3115A2 on 0x60");
+        writeString("Not a MPL3115A2 on 0x60\r\n");
         break;
     }
 
@@ -98,7 +98,7 @@ int main(void)
         if (mpl_state == 0)
         {
             temperature = mpl_read_temp();
-            print_temp("DS: ", temperature, temperature - old_mpl);
+            print_temp("MPL: ", temperature, temperature - old_mpl);
             old_mpl = temperature;
         }
         writeString("\e[K");
